@@ -3,12 +3,16 @@
   become: true
   tasks:
     - name: Install apache httpd
-      ansible.builtin.apt:
+      yum:
         name: apache2
         state: present
         update_cache: yes
+    - name: restart the apache server
+      service:
+        name: httpd
+        state: restarted
     - name: Copy file with owner and permissions
-      ansible.builtin.copy:
+      copy:
         src: index.html
         dest: /var/www/html
         owner: root
